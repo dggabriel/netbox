@@ -1,0 +1,26 @@
+---
+- hosts: all_servers
+  become: true
+ 
+  tasks:
+
+  - name: drop user if exists
+    shell: 'psql postgres -c "DROP USER IF EXISTS netbox"'
+    become_user: postgres
+    ignore_errors: yes
+
+  - name: create user netbox
+    shell: 'psql postgres -c "CREATE USER netbox"'
+    become_user: postgres
+    ignore_errors: yes
+
+  - name: create database netbox
+    shell: 'psql postgres -c "CREATE DATABASE netbox"'
+    become_user: postgres
+    ignore_errors: yes
+
+  - name: grant netbox user access to netbox db
+    shell: 'psql postgres -c "GRANT ALL PRIVILEGES ON DATABASE netbox to netbox"'
+    become_user: postgres
+    ignore_errors: yes
+#manually set the password after

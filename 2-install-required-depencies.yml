@@ -1,0 +1,30 @@
+---
+- hosts: all_servers
+  become: true
+  become_user: root
+  tasks:
+
+  - name: Install required dependencies
+    apt:
+      update_cache: yes
+      name:
+        - git 
+        - gcc 
+        - nginx 
+        - redis 
+        - python3-setuptools  
+        - graphviz 
+        - python3 
+        - python3-pip 
+        - python3-venv 
+        - python3-dev 
+        - build-essential 
+        - libxml2-dev 
+        - libxslt1-dev 
+        - libffi-dev 
+        - libpq-dev 
+        - libssl-dev 
+        - zlib1g-dev 
+      state: present
+ 
+
