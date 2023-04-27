@@ -1,0 +1,14 @@
+---
+
+- hosts: all_servers
+  become: true
+  tasks:
+
+  - name: Install redis
+    apt:
+      name:
+       - redis-server
+      state: latest
+
+
+

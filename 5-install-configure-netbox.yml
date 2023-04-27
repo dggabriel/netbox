@@ -1,0 +1,31 @@
+---
+- hosts: all_servers
+  become: true
+  become_user: root
+  
+  tasks:
+  - name: installation of netbox
+    shell: |
+      cd /opt
+      rm -rf netbox
+      sudo git clone -b master https://github.com/netbox-community/netbox.git
+
+  - name: create netbox system user
+    shell: |
+      sudo adduser --system --group netbox
+      sudo chown --recursive netbox /opt/netbox/netbox/media/
+
+  - name: Copy configuration.py
+    template:
+     src: configuration.py
+     dest: /opt/netbox/netbox/netbox/configuration.py
+     mode: 0644
+     owner: root
+     group: root
+
+  
+      
+
+
+
+    
