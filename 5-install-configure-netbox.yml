@@ -23,6 +23,30 @@
      owner: root
      group: root
 
+  - name: execute upgrade.sh
+    shell: |
+      sudo /opt/netbox/upgrade.sh
+
+  #create superuser manually
+  #source /opt/netbox/venv/bin/activate
+#(venv) cd /opt/netbox/netbox
+#(venv) python3 manage.py createsuperuser
+
+  - name: setup middleware - gunicorn
+    shell: |
+      sudo cp /opt/netbox/contrib/gunicorn.py /opt/netbox/gunicorn.py
+
+  - name: startup configuration for netbox
+    shell: |
+      sudo cp -v /opt/netbox/contrib/*.service /etc/systemd/system/
+      sudo systemctl daemon-reload
+      sudo systemctl start netbox
+      sudo systemctl start netbox-rq
+      sudo systemctl enable netbox
+      sudo systemctl enable netbox-rq
+      sudo systemctl status netbox netbox-rq
+
+
   
       
 

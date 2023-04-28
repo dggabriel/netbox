@@ -1,0 +1,21 @@
+---
+
+- hosts: all_servers
+  become: true
+  tasks:
+
+#execute this manually
+  #- name: obtain ssl certificate
+    #shell: |
+      #sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+      #-keyout /etc/ssl/private/netbox.key \
+      #-out /etc/ssl/certs/netbox.crt
+
+  - name: install nginx
+    shell: |
+      #sudo apt install -y nginx
+      sudo cp /opt/netbox/contrib/nginx.conf /etc/nginx/sites-available/netbox
+      sudo rm /etc/nginx/sites-enabled/default
+      sudo ln -s /etc/nginx/sites-available/netbox /etc/nginx/sites-enabled/netbox
+      sudo systemctl restart nginx
+
